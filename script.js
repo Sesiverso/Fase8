@@ -31,6 +31,22 @@ shuffledPhrases.forEach((phrase, index) => {
     card.classList.add('card');
     card.dataset.phrase = phrase;
     card.dataset.index = index;
+
+    const cardInner = document.createElement('div');
+    cardInner.classList.add('card-inner');
+
+    const cardFront = document.createElement('div');
+    cardFront.classList.add('card-front');
+    cardFront.textContent = 'Caatinga'; // Frente com texto "Caatinga"
+
+    const cardBack = document.createElement('div');
+    cardBack.classList.add('card-back');
+    cardBack.textContent = phrase; // Parte de trás mostra a frase
+
+    cardInner.appendChild(cardFront);
+    cardInner.appendChild(cardBack);
+    card.appendChild(cardInner);
+
     card.addEventListener('click', flipCard);
     gameBoard.appendChild(card);
 });
@@ -40,7 +56,6 @@ function flipCard() {
         return;
     }
 
-    this.textContent = this.dataset.phrase;
     this.classList.add('flipped');
     flippedCards.push(this);
 
@@ -52,7 +67,6 @@ function flipCard() {
 function checkMatch() {
     const [card1, card2] = flippedCards;
 
-    // Checar se a pergunta e a resposta correspondem como pares
     if (
         (card1.dataset.phrase === "Qual o cacto típico da caatinga?" && card2.dataset.phrase === "Mandacaru") ||
         (card1.dataset.phrase === "Mandacaru" && card2.dataset.phrase === "Qual o cacto típico da caatinga?") ||
@@ -80,8 +94,6 @@ function checkMatch() {
         }
     } else {
         setTimeout(() => {
-            card1.textContent = '';
-            card2.textContent = '';
             card1.classList.remove('flipped');
             card2.classList.remove('flipped');
         }, 1000);
